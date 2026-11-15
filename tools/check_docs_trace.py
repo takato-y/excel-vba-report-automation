@@ -18,9 +18,9 @@ import re
 import sys
 from pathlib import Path
 
-ERR_RE = re.compile(r"(?<![A-Za-z0-9_-])ERR-\d{3}(?![A-Za-z0-9_-])")
+ERR_RE = re.compile(r"(?<![A-Za-z0-9_-])ERR-\d+(?![A-Za-z0-9_-])")
 # 4 章の見出し。ID はインラインコードで書いてもよい（### `ERR-001` 名称）
-HEADING_RE = re.compile(r"^###\s+`?(ERR-\d{3})`?\s")
+HEADING_RE = re.compile(r"^###\s+`?(ERR-\d+)`?\s")
 CHAPTER_RE = re.compile(r"^##\s+(\d+)\.")
 
 
