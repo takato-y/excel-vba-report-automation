@@ -23,6 +23,7 @@ Public Sub RunReportCore()
     Dim agg As Object
     Dim errCount As Long
     Dim msg As String
+    Dim pdfPath As String
     Dim calcMode As XlCalculation
     Dim errNo As Long, errDesc As String
 
@@ -44,6 +45,7 @@ Public Sub RunReportCore()
     Set agg = Aggregate(saleRows)
     WriteDetailSheet saleRows
     BuildReport agg, cfg, saleRows.Count, errCount
+    If cfg.ExportPdf Then pdfPath = ExportReportPdf(cfg)
 
     Application.Calculation = calcMode
     Application.ScreenUpdating = True
@@ -51,6 +53,7 @@ Public Sub RunReportCore()
     msg = "レポートを作成しました。" & vbCrLf & _
           "取込明細：" & saleRows.Count & " 件　エラー：" & errCount & " 件"
     If errCount > 0 Then msg = msg & vbCrLf & "取り込めなかった行は「エラー一覧」シートを確認してください。"
+    If pdfPath <> "" Then msg = msg & vbCrLf & "PDF：" & pdfPath
     SetStatus STATUS_OK & Replace(msg, vbCrLf, " / ")
     If Not gSilent Then ThisWorkbook.Worksheets(SHEET_REPORT).Activate
     Notify msg, IIf(errCount > 0, vbExclamation, vbInformation)
