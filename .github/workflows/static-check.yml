@@ -1,0 +1,23 @@
+name: static-check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# 検査はリポジトリを読むだけなので、トークンの権限を読み取りに限定する
+permissions:
+  contents: read
+
+# マクロの動作テスト（tests/run_tests.py）は実機の Excel を操作するため、ローカル環境でのみ実行する。
+# ここでは Excel なしで確かめられる範囲だけを検査する。
+jobs:
+  static-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # 詳細設計書のエラーIDと障害対応手順書の対応（TC-011）
+      - run: python tools/check_docs_trace.py
