@@ -3,7 +3,7 @@
 [![static-check](https://github.com/takato-y/excel-vba-report-automation/actions/workflows/static-check.yml/badge.svg)](https://github.com/takato-y/excel-vba-report-automation/actions/workflows/static-check.yml)
 
 - GitHub Actions で検査している範囲：設計書のエラーIDと障害対応手順書の突き合わせ（Excel を使わない静的検査）
-- 手元の環境でのみ確かめた範囲：実機の Excel でマクロを動かすテスト（tests/run_tests.py、TC-001〜010）
+- 手元の環境でのみ確かめた範囲：実機の Excel でマクロを動かすテスト（tests/run_tests.py、TC-001〜010。テスト仕様書に未実施と記載した項目を除く）
 
 フォルダに置いた月別の売上ファイル（CSV・Excel）をボタン1つで取りまとめ、顧客別・商品別・月別の集計帳票と PDF を作成する Excel ツールです。
 
