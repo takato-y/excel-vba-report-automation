@@ -77,6 +77,7 @@ Private Sub BuildSettingsSheet(ByVal ws As Worksheet)
 
     ws.Range("A11").Value = "前回の実行結果"
     ws.Range("A11").Font.Bold = True
+    ws.Range("A11").VerticalAlignment = xlTop
     ws.Range("B11:C11").Merge
     ws.Range("B11").WrapText = True
     ws.Rows(11).RowHeight = 30

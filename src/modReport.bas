@@ -21,6 +21,8 @@ Public Sub WriteDetailSheet(ByVal saleRows As Collection)
     Set ws = ThisWorkbook.Worksheets(SHEET_DETAIL)
     If ws.AutoFilterMode Then ws.AutoFilterMode = False
     ws.Cells.Clear
+    ws.Cells.Font.Name = "Meiryo UI"
+    ws.Cells.Font.Size = 10
 
     ws.Range("A1:H1").Value = Array("日付", "年月", "顧客名", "商品名", "数量", "単価", "金額", "取込元ファイル")
     StyleHeader ws.Range("A1:H1")
@@ -97,7 +99,11 @@ Public Sub BuildReport(ByVal agg As Object, ByRef cfg As ReportConfig, ByVal row
     ws.Range("A1").Value = "売上集計レポート"
     ws.Range("A1").Font.Size = 16
     ws.Range("A1").Font.Bold = True
-    ws.Range("A2").Value = "対象期間：" & ms(0) & " ～ " & ms(nM - 1)
+    If nM = 1 Then
+        ws.Range("A2").Value = "対象期間：" & ms(0)
+    Else
+        ws.Range("A2").Value = "対象期間：" & ms(0) & " ～ " & ms(nM - 1)
+    End If
     ws.Cells(2, lastCol).Value = "作成日時：" & Format$(Now, "yyyy/mm/dd hh:nn")
     ws.Cells(2, lastCol).HorizontalAlignment = xlRight
     With ws.Range(ws.Cells(2, 1), ws.Cells(2, lastCol)).Borders(xlEdgeBottom)
@@ -133,8 +139,9 @@ Public Sub BuildReport(ByVal agg As Object, ByRef cfg As ReportConfig, ByVal row
     If errCount > 0 Then
         ws.Range("B9").Font.Color = vbRed
         ws.Range("B9").Font.Bold = True
-        ws.Range("C9").Value = "取り込めなかった行があります。「エラー一覧」シートを確認してください。"
-        ws.Range("C9").Font.Color = vbRed
+        ws.Range("A10").Value = "※ 取り込めなかった行は「エラー一覧」シートを参照してください。"
+        ws.Range("A10").Font.Color = vbRed
+        ws.Range("A10").Font.Size = 9
     End If
 
     ' --- 顧客別・月別 ---

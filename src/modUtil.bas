@@ -61,6 +61,9 @@ Public Sub ClearErrorLog()
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Worksheets(SHEET_ERRORS)
     ws.Cells.Clear
+    ' Clear で書式も消えるため、フォントを設定し直す
+    ws.Cells.Font.Name = "Meiryo UI"
+    ws.Cells.Font.Size = 10
     ws.Range("A1:C1").Value = Array("ファイル名", "行", "内容")
     With ws.Range("A1:C1")
         .Font.Bold = True
@@ -69,7 +72,9 @@ Public Sub ClearErrorLog()
     End With
     ws.Columns("A").ColumnWidth = 26
     ws.Columns("B").ColumnWidth = 6
-    ws.Columns("C").ColumnWidth = 80
+    ws.Columns("C").ColumnWidth = 90
+    ws.Columns("C").WrapText = True
+    ws.Columns("A:C").VerticalAlignment = xlTop
     mErrorCount = 0
 End Sub
 
