@@ -5,6 +5,14 @@
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-11-16
+
+### Added
+
+- 障害対応手順書（docs/06_障害対応手順書.md）。障害時の流れ、切り分けの順番、詳細設計書のエラーID（ERR-001〜005・ERR-101〜106・ERR-900）ごとの対処・復旧の確認・再実行の可否、記録と報告のひな形
+- 導入・運用手順書に、定期点検・バックアップと戻し方・資格情報（該当なし）・連絡体制を追加。困ったときの表にエラーIDを併記
+- 設計書と障害対応手順書のエラーIDの対応を検査する `tools/check_docs_trace.py` と、テストケース TC-011
+
 ## [1.0.1] - 2026-11-15
 
 ### Fixed
@@ -35,6 +43,7 @@
 - 明細・エラー一覧シートのフォントが、再実行のたびに既定に戻っていた問題
 - 単月のデータで対象期間が「2026-07 ～ 2026-07」と表示されていた問題
 
-[Unreleased]: https://github.com/takato-y/excel-vba-report-automation/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/takato-y/excel-vba-report-automation/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/takato-y/excel-vba-report-automation/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/takato-y/excel-vba-report-automation/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/takato-y/excel-vba-report-automation/releases/tag/v1.0.0
