@@ -5,7 +5,9 @@
 2. サンプルデータでレポートを作成した状態で保存する（開いてすぐ出力例を見られるようにするため）
 3. Excel の画面の範囲をそのまま画像にして docs/images/ に保存する
 """
+import re
 import shutil
+import zipfile
 from pathlib import Path
 
 import build as B
@@ -24,6 +26,31 @@ Public Function T_Populate() As String
     T_Populate = st
 End Function
 '''
+
+
+def sanitize_ooxml(path, author="takato-y"):
+    """保存したブックから、作成者名と保存時の絶対パスを取り除く。
+
+    Excel は保存時に Office のユーザー名を作成者として、保存場所のフルパスを workbook.xml に書き込む。
+    公開するブックに作業環境の情報を残さないため、配布前に書き換える（VBA のバイナリには触れない）。
+    """
+    src = Path(path)
+    tmp = src.with_suffix(".sanitize.tmp")
+    with zipfile.ZipFile(src) as zin, zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as zout:
+        for item in zin.infolist():
+            data = zin.read(item.filename)
+            if item.filename == "docProps/core.xml":
+                text = data.decode("utf-8")
+                for tag in ("dc:creator", "cp:lastModifiedBy"):
+                    text = re.sub(rf"<{tag}>[^<]*</{tag}>", f"<{tag}>{author}</{tag}>", text)
+                data = text.encode("utf-8")
+            elif item.filename == "xl/workbook.xml":
+                text = data.decode("utf-8")
+                text = re.sub(r"<mc:AlternateContent[^>]*>(?:(?!</mc:AlternateContent>).)*?x15ac:absPath.*?</mc:AlternateContent>",
+                              "", text, flags=re.S)
+                data = text.encode("utf-8")
+            zout.writestr(item, data)
+    shutil.move(tmp, src)
 
 
 def main():
@@ -64,6 +91,7 @@ def main():
     print("errors :", r2.get("ok"), r2.get("status"), r2.get("error") or "")
 
     shutil.copy(final, ROOT / "sales_report_tool.xlsm")
+    sanitize_ooxml(ROOT / "sales_report_tool.xlsm")
     for src, name in [(work / "report.png", "report.png"), (work / "detail.png", "detail.png"),
                       (work / "settings.png", "settings.png"), (work2 / "errors.png", "errors.png"),
                       (work2 / "summary_err.png", "summary_with_errors.png")]:
