@@ -12,6 +12,7 @@
 #   testCode   : VBA code injected as a temporary module (removed before saving)
 #   call       : { macro, args[] }  return value is written to result.status
 #   dump       : [ { sheet, out } ]  UsedRange values written as UTF-8 TSV
+#   render     : [ { sheet, range, out, scale } ]  range picture exported as PNG
 #   saveAs     : path to save as .xlsm ("" = do not save)
 #   result     : path of the result JSON
 param([Parameter(Mandatory=$true)][string]$Spec)
@@ -91,6 +92,27 @@ try {
       [void]$sb.Append(($cells -join "`t") + "`n")
     }
     [IO.File]::WriteAllText([string]$d.out, $sb.ToString(), $utf8)
+  }
+
+  # Range.CopyPicture -> paste into a temporary chart -> Chart.Export (no printer involved).
+  # Metafile format keeps text sharp when the chart is enlarged by "scale".
+  foreach ($p in $cfg.render) {
+    $ws = $wb.Worksheets.Item([string]$p.sheet)
+    $ws.Activate()
+    $rng = $ws.Range([string]$p.range)
+    $k = 2.0
+    if ($p.scale) { $k = [double]$p.scale }
+    $rng.CopyPicture(1, -4147)
+    $co = $ws.ChartObjects().Add(0, 0, $rng.Width * $k, $rng.Height * $k)
+    $co.Chart.ChartArea.Format.Line.Visible = 0
+    $co.Activate()
+    $co.Chart.Paste()
+    $pic = $co.Chart.Shapes.Item($co.Chart.Shapes.Count)
+    $pic.LockAspectRatio = 0
+    $pic.Left = 0; $pic.Top = 0
+    $pic.Width = $rng.Width * $k; $pic.Height = $rng.Height * $k
+    $co.Chart.Export([string]$p.out, "PNG") | Out-Null
+    $co.Delete()
   }
 
   if ($tmp -ne $null) { $wb.VBProject.VBComponents.Remove($tmp) }
