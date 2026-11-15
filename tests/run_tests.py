@@ -257,6 +257,12 @@ def main():
         if pdfs:
             print(f"     PDF: {pdfs[0]} ({pdfs[0].stat().st_size:,} bytes)")
 
+    if want("TC-010"):
+        # 上の階層が無い出力先。PDF の書き出し前に止まるため、画面なしの Excel でも安全に試せる
+        r = run_case(book, "tc010", ROOT / "sample_data", "sample_data", outp="無い階層\\output", pdf="する")
+        check("TC-010", "出力フォルダを作れない→日本語のエラー", r.get("ok") and
+              status_of(r).startswith("エラー：出力フォルダを作成できませんでした"), status_of(r) or r.get("error"))
+
     n_ok = sum(1 for _, ok in RESULTS if ok)
     print(f"\n合計 {len(RESULTS)} 件中 PASS {n_ok} / FAIL {len(RESULTS) - n_ok}")
     return 0 if n_ok == len(RESULTS) else 1
