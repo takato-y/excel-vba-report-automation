@@ -5,6 +5,17 @@
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-11-16
+
+### Fixed
+
+- ADR-0002 の「決定」で、見出し行が想定と異なるファイルを「処理全体を止める」場合に含めていた記述を修正。実装・詳細設計書（ERR-102）のとおり、そのファイルだけを除外して処理を続けることを明記（ADR-0002 版 1.1）
+- テスト仕様書 5章で、メッセージボックスの文言を「前回の実行結果」と「同一」としていた記述を修正。「前回の実行結果」では先頭に `正常終了：` / `エラー：` が付き改行が置き換わること、ERR-900 のエラー番号と確認ポイントはメッセージにだけ表示されることを明記（テスト仕様書 版 1.2）
+
+### Changed
+
+- 文書の文章を見直し（話し言葉・表記ゆれ・説明の不足を修正）。障害対応手順書の「再実行してよいか」に理由を補足し、導入・運用手順書 5章をです・ます調に統一（詳細設計書 版 1.2、導入・運用手順書 版 1.2、障害対応手順書 版 1.1、ADR-0001 版 1.1）
+
 ## [1.0.2] - 2026-11-16
 
 ### Added
@@ -49,7 +60,8 @@
 - 明細・エラー一覧シートのフォントが、再実行のたびに既定に戻っていた問題
 - 単月のデータで対象期間が「2026-07 ～ 2026-07」と表示されていた問題
 
-[Unreleased]: https://github.com/takato-y/excel-vba-report-automation/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/takato-y/excel-vba-report-automation/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/takato-y/excel-vba-report-automation/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/takato-y/excel-vba-report-automation/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/takato-y/excel-vba-report-automation/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/takato-y/excel-vba-report-automation/releases/tag/v1.0.0
