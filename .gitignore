@@ -1,0 +1,11 @@
+# Office の一時ファイル
+~$*
+*.tmp
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+# 実行時の出力
+output/
+tests/_work/
