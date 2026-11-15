@@ -5,6 +5,12 @@
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-11-15
+
+### Fixed
+
+- README の「エラー時の設定の復元」の記述をテスト仕様書に合わせた（設定の復元と予期しないエラー時の動作はコード確認のみであることを明記）
+
 ## [1.0.0] - 2026-11-15
 
 ### Added
@@ -29,5 +35,6 @@
 - 明細・エラー一覧シートのフォントが、再実行のたびに既定に戻っていた問題
 - 単月のデータで対象期間が「2026-07 ～ 2026-07」と表示されていた問題
 
-[Unreleased]: https://github.com/takato-y/excel-vba-report-automation/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/takato-y/excel-vba-report-automation/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/takato-y/excel-vba-report-automation/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/takato-y/excel-vba-report-automation/releases/tag/v1.0.0
