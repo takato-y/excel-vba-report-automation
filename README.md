@@ -2,10 +2,9 @@
 
 [![static-check](https://github.com/takato-y/excel-vba-report-automation/actions/workflows/static-check.yml/badge.svg)](https://github.com/takato-y/excel-vba-report-automation/actions/workflows/static-check.yml)
 
-- GitHub Actions で検査している範囲：設計書のエラーIDと障害対応手順書の突き合わせ（Excel を使わない静的検査）
-- 手元の環境でのみ確認した範囲：実機の Excel でマクロを動かすテスト（tests/run_tests.py、TC-001〜010。テスト仕様書に未実施と記載した項目を除く）
+**毎月の売上ファイルを開いてコピーし、集計表と PDF を作る作業を、ボタン1つで終わらせる Excel ツールです。**
 
-フォルダに置いた月別の売上ファイル（CSV・Excel）をボタン1つで取りまとめ、顧客別・商品別・月別の集計帳票と PDF を作成する Excel ツールです。
+フォルダに置いた月別の売上ファイル（CSV・Excel）を取りまとめ、顧客別・商品別・月別の集計帳票と、そのまま提出できる PDF を作成します。
 
 > 本リポジトリはポートフォリオ（閲覧用）です。無断での再利用・再配布はご遠慮ください。
 > 掲載しているデータ・会社名・商品名はすべて架空のものです。
@@ -155,6 +154,11 @@ flowchart LR
 ```text
 python3 tools/check_docs_trace.py
 ```
+
+### 自動テストで確認している範囲
+
+- GitHub Actions で検査している範囲：設計書のエラーIDと障害対応手順書の突き合わせ（Excel を使わない静的検査）
+- 手元の環境でのみ確認した範囲：実機の Excel でマクロを動かすテスト（tests/run_tests.py、TC-001〜010。テスト仕様書に未実施と記載した項目を除く）
 
 ## 動作環境
 
